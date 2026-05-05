@@ -94,17 +94,7 @@
         </div>
     </a>
 
-    <!-- LAINNYA -->
-    <a href="/dashboard?kategori=Lainnya" style="text-decoration:none;">
-        <div style="
-            padding:10px 15px;
-            border-radius:10px;
-            background: {{ $kategori == 'Lainnya' ? '#ff7a00' : 'white' }};
-            color: {{ $kategori == 'Lainnya' ? 'white' : 'black' }};
-        ">
-            Lainnya
-        </div>
-    </a>
+
 
 </div>
 
