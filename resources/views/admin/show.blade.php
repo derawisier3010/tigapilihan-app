@@ -35,6 +35,31 @@
 
         <hr>
 
+        <h4>Produk yang Dibeli</h4>
+
+        <table border="1" width="100%" cellpadding="8"
+            style="border-collapse:collapse; margin-bottom:20px;">
+
+            <tr style="background:#ff7a00; color:white;">
+                <th>Produk</th>
+                <th>Qty</th>
+                <th>Harga</th>
+                <th>Subtotal</th>
+            </tr>
+
+            @foreach($order->items as $item)
+            <tr>
+                <td>{{ $item->product->nama }}</td>
+                <td>{{ $item->qty }}</td>
+                <td>Rp {{ number_format($item->harga,0,',','.') }}</td>
+                <td>
+                    Rp {{ number_format($item->qty * $item->harga,0,',','.') }}
+                </td>
+            </tr>
+            @endforeach
+
+        </table>
+
         <p><b>Metode Pembayaran:</b> {{ $order->metode }}</p>
         <p><b>Total:</b> Rp {{ number_format($order->total, 0, ',', '.') }}</p>
 

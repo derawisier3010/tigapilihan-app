@@ -6,6 +6,61 @@
 
 <div style="padding:30px;">
 
+<!-- STATISTIK ADMIN -->
+
+<div style="
+display:flex;
+gap:20px;
+margin-bottom:30px;
+flex-wrap:wrap;
+">
+
+    <div style="
+        background:white;
+        padding:20px;
+        width:220px;
+        border-radius:12px;
+        box-shadow:0 2px 10px rgba(0,0,0,0.08);
+    ">
+        <h2>{{ $totalUser }}</h2>
+        <p>Total User</p>
+    </div>
+
+    <div style="
+        background:white;
+        padding:20px;
+        width:220px;
+        border-radius:12px;
+        box-shadow:0 2px 10px rgba(0,0,0,0.08);
+    ">
+        <h2>{{ $totalProduk }}</h2>
+        <p>Total Produk</p>
+    </div>
+
+    <div style="
+        background:white;
+        padding:20px;
+        width:220px;
+        border-radius:12px;
+        box-shadow:0 2px 10px rgba(0,0,0,0.08);
+    ">
+        <h2>{{ $totalPesanan }}</h2>
+        <p>Total Pesanan</p>
+    </div>
+
+    <div style="
+        background:white;
+        padding:20px;
+        width:220px;
+        border-radius:12px;
+        box-shadow:0 2px 10px rgba(0,0,0,0.08);
+    ">
+        <h2>{{ $pending }}</h2>
+        <p>Pesanan Pending</p>
+    </div>
+
+</div>
+
     <h2>Data Pesanan</h2>
 
     @if(session('success'))

@@ -62,6 +62,14 @@
                 <input type="email" name="email" placeholder="Email"
                     style="width:100%; padding:10px; margin-top:10px; border-radius:8px; border:1px solid #ccc;" required>
 
+                <input type="text" name="no_hp" placeholder="No Handphone"
+                    style="width:100%; padding:10px; margin-top:10px; border-radius:8px; border:1px solid #ccc;" required>
+
+                <textarea name="alamat" placeholder="Alamat Lengkap"
+    style="width:100%; padding:10px; margin-top:10px; border-radius:8px; border:1px solid #ccc;"
+    rows="3"
+    required></textarea>
+
                 <input type="password" name="password" placeholder="Password"
                     style="width:100%; padding:10px; margin-top:10px; border-radius:8px; border:1px solid #ccc;" required>
 

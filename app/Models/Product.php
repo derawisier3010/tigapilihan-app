@@ -7,10 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable = [
-    'nama',
-    'harga',
-    'stok',
-    'kategori',
-    'gambar'
-];
+        'nama',
+        'harga',
+        'stok',
+        'kategori',
+        'gambar'
+    ];
+
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 }

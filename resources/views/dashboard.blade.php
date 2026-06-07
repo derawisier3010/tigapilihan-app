@@ -131,15 +131,26 @@
             </div>
 
             <!-- DETAIL -->
-            <div style="padding:15px;">
+           <div style="padding:15px;">
                 <b>{{ $p->nama }}</b>
 
                 <p style="color:#ff7a00; font-weight:bold;">
                     Rp {{ number_format($p->harga, 0, ',', '.') }}
                 </p>
 
+                <p style="
+                    font-size:13px;
+                    color:gray;
+                    margin-bottom:10px;
+                ">
+                    Stok: {{ $p->stok }}
+                </p>
+
+              @if($p->stok > 0)
+
                 <form action="{{ route('cart.add', $p->id) }}" method="POST">
                     @csrf
+
                     <button style="
                         width:100%;
                         background:#ff7a00;
@@ -152,9 +163,26 @@
                         + Keranjang
                     </button>
                 </form>
+
+                @else
+
+                <button disabled style="
+                    width:100%;
+                    background:#ccc;
+                    color:white;
+                    border:none;
+                    padding:8px;
+                    border-radius:8px;
+                ">
+                    Stok Habis
+                </button>
+
+                                @endif
+
             </div>
 
         </div>
+
         @endforeach
 
         </div>

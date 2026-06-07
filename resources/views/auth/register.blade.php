@@ -16,6 +16,35 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <!-- No HP -->
+<div class="mt-4">
+    <x-input-label for="no_hp" value="No Handphone" />
+
+    <x-text-input
+        id="no_hp"
+        class="block mt-1 w-full"
+        type="text"
+        name="no_hp"
+        :value="old('no_hp')"
+        required />
+
+    <x-input-error :messages="$errors->get('no_hp')" class="mt-2" />
+</div>
+
+<!-- Alamat -->
+<div class="mt-4">
+    <x-input-label for="alamat" value="Alamat" />
+
+    <textarea
+        id="alamat"
+        name="alamat"
+        class="block mt-1 w-full border-gray-300 rounded-md shadow-sm"
+        rows="3"
+        required>{{ old('alamat') }}</textarea>
+
+    <x-input-error :messages="$errors->get('alamat')" class="mt-2" />
+</div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />

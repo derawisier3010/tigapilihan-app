@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,21 +56,54 @@ Route::get('/cart/decrease/{id}', [CartController::class, 'decrease'])->name('ca
 CHECKOUT
 */
 
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
+Route::middleware('auth')->group(function () {
+
+    Route::get('/checkout', [CheckoutController::class, 'index'])
+        ->name('checkout.index');
+
+    Route::post('/checkout', [CheckoutController::class, 'process'])
+        ->name('checkout.process');
+
+});
 
 /*
 ADMIN (PROTECTED)
 */
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin/update/{id}', [AdminController::class, 'updateStatus'])->name('admin.update');
+
+    Route::get('/admin', [AdminController::class, 'index'])
+        ->name('admin.index');
+
+    Route::get('/admin/update/{id}', [AdminController::class, 'updateStatus'])
+        ->name('admin.update');
+
+    Route::get('/admin/users', [AdminController::class, 'users'])
+        ->name('admin.users');
+
+    Route::get('/admin/user-role/{id}', [AdminController::class, 'changeRole'])
+        ->name('admin.role');
+
+    Route::delete('/admin/user-delete/{id}', [AdminController::class, 'deleteUser'])
+        ->name('admin.user.delete');
 });
 
 
 Route::get('/admin/{id}', [AdminController::class, 'show'])->name('admin.show');
 Route::delete('/admin/delete/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/pesanan', [OrderController::class, 'index'])
+        ->name('orders.index');
+
+    Route::get('/pesanan/{id}', [OrderController::class, 'show'])
+        ->name('orders.show');
+
+});
+
+Route::get('/admin/users', [AdminController::class, 'users'])
+    ->name('admin.users');
 
 
 require __DIR__.'/auth.php';

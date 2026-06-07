@@ -35,38 +35,49 @@
 
             <!-- NAMA -->
             <div style="margin-bottom:15px;">
-                <label>Nama</label>
-                <input type="text" name="nama" required style="
-                    width:100%;
-                    padding:10px;
-                    margin-top:5px;
-                    border-radius:6px;
-                    border:1px solid #ccc;
-                ">
-            </div>
+    <label>Nama</label>
+
+    <input type="text"
+           value="{{ auth()->user()->name }}"
+           readonly
+           style="
+            width:100%;
+            padding:10px;
+            margin-top:5px;
+            background:#f5f5f5;
+            border-radius:6px;
+            border:1px solid #ccc;
+           ">
+</div>
 
             <!-- ALAMAT -->
             <div style="margin-bottom:15px;">
                 <label>Alamat</label>
-                <textarea name="alamat" required style="
-                    width:100%;
-                    padding:10px;
-                    margin-top:5px;
-                    border-radius:6px;
-                    border:1px solid #ccc;
-                "></textarea>
+                <textarea readonly
+style="
+width:100%;
+padding:10px;
+margin-top:5px;
+background:#f5f5f5;
+border-radius:6px;
+border:1px solid #ccc;
+">{{ auth()->user()->alamat }}</textarea>
             </div>
 
             <!-- NO HP -->
             <div style="margin-bottom:15px;">
                 <label>Nomor HP</label>
-                <input type="text" name="no_hp" required style="
-                    width:100%;
-                    padding:10px;
-                    margin-top:5px;
-                    border-radius:6px;
-                    border:1px solid #ccc;
-                ">
+                <input type="text"
+       value="{{ auth()->user()->no_hp }}"
+       readonly
+       style="
+        width:100%;
+        padding:10px;
+        margin-top:5px;
+        background:#f5f5f5;
+        border-radius:6px;
+        border:1px solid #ccc;
+       ">
             </div>
 
             <!-- METODE PEMBAYARAN -->
