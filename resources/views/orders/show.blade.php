@@ -28,34 +28,34 @@
 
             <tr>
                 <td>Nama</td>
-                <td>{{ $order->nama }}</td>
+                <td>{{ $order->customer_name }}</td>
             </tr>
 
             <tr>
                 <td>Alamat</td>
-                <td>{{ $order->alamat }}</td>
+                <td>{{ $order->address }}</td>
             </tr>
 
             <tr>
                 <td>No HP</td>
-                <td>{{ $order->no_hp }}</td>
+                <td>{{ $order->phone }}</td>
             </tr>
 
             <tr>
                 <td>Metode Pembayaran</td>
-                <td>{{ $order->metode }}</td>
+                <td>{{ $order->payment_method }}</td>
             </tr>
 
             <tr>
                 <td>Total Belanja</td>
                 <td>
-                    Rp {{ number_format($order->total,0,',','.') }}
+                    Rp {{ number_format($order->total_amount,0,',','.') }}
                 </td>
             </tr>
 
             <tr>
                 <td>Status Pesanan</td>
-                <td>{{ ucfirst($order->status) }}</td>
+                <td>{{ ucfirst($order->order_status) }}</td>
             </tr>
 
             <tr>
@@ -81,16 +81,16 @@
         @foreach($order->items as $item)
 
         <tr>
-            <td>{{ $item->product->nama }}</td>
+            <td>{{ $item->product->name }}</td>
 
-            <td>{{ $item->qty }}</td>
+            <td>{{ $item->quantity }}</td>
 
             <td>
-                Rp {{ number_format($item->harga,0,',','.') }}
+                Rp {{ number_format($item->price,0,',','.') }}
             </td>
 
             <td>
-                Rp {{ number_format($item->qty * $item->harga,0,',','.') }}
+                Rp {{ number_format($item->quantity * $item->price,0,',','.') }}
             </td>
         </tr>
 

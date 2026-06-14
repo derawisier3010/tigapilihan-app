@@ -16,7 +16,7 @@ class AdminController extends Controller
         $totalUser = User::count();
         $totalProduk = Product::count();
         $totalPesanan = Order::count();
-        $pending = Order::where('status', 'pending')->count();
+        $pending = Order::where('order_status', 'pending')->count();
 
         return view('admin.index', compact(
             'orders',
@@ -32,10 +32,10 @@ class AdminController extends Controller
         $order = Order::findOrFail($id);
 
         // ubah status berurutan
-        if ($order->status == 'pending') {
-            $order->status = 'diproses';
-        } elseif ($order->status == 'diproses') {
-            $order->status = 'selesai';
+        if ($order->order_status == 'pending') {
+            $order->order_status = 'diproses';
+        } elseif ($order->order_status == 'diproses') {
+            $order->order_status = 'selesai';
         }
 
         $order->save();

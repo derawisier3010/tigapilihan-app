@@ -18,31 +18,31 @@
 
         <!-- No HP -->
 <div class="mt-4">
-    <x-input-label for="no_hp" value="No Handphone" />
+    <x-input-label for="phone" value="No Handphone" />
 
     <x-text-input
-        id="no_hp"
+        id="phone"
         class="block mt-1 w-full"
         type="text"
-        name="no_hp"
-        :value="old('no_hp')"
+        name="phone"
+        :value="old('phone')"
         required />
 
-    <x-input-error :messages="$errors->get('no_hp')" class="mt-2" />
+    <x-input-error :messages="$errors->get('phone')" class="mt-2" />
 </div>
 
 <!-- Alamat -->
 <div class="mt-4">
-    <x-input-label for="alamat" value="Alamat" />
+    <x-input-label for="address" value="Alamat" />
 
     <textarea
-        id="alamat"
-        name="alamat"
+        id="address"
+        name="address"
         class="block mt-1 w-full border-gray-300 rounded-md shadow-sm"
         rows="3"
-        required>{{ old('alamat') }}</textarea>
+        required>{{ old('address') }}</textarea>
 
-    <x-input-error :messages="$errors->get('alamat')" class="mt-2" />
+    <x-input-error :messages="$errors->get('address')" class="mt-2" />
 </div>
 
         <!-- Password -->

@@ -24,45 +24,46 @@ class CheckoutController extends Controller
         $total = 0;
 
         foreach ($cart as $item) {
-            $total += $item['harga'] * $item['qty'];
+            $total += $item['price'] * $item['quantity'];
         }
 
         $user = Auth::user();
 
         // SIMPAN ORDER
         $order = Order::create([
-            'user_id' => $user->id,
-            'nama' => $user->name,
-            'alamat' => $user->alamat,
-            'no_hp' => $user->no_hp,
-            'metode' => $request->metode,
-            'total' => $total,
-            'status' => 'pending',
-        ]);
+        'user_id' => $user->id,
+        'customer_name' => $user->name,
+        'address' => $user->address,
+        'phone' => $user->phone,
+        'payment_method' => $request->metode,
+        'total_amount' => $total,
+        'order_status' => 'pending',
+        'order_date' => now(),
+    ]);
 
         foreach ($cart as $productId => $item) {
 
     $product = Product::find($productId);
 
     // CEK STOK
-    if ($product->stok < $item['qty']) {
+    if ($product->stock < $item['quantity']) {
 
         return back()->with(
             'error',
-            'Stok '.$product->nama.' tidak mencukupi'
+            'Stok '.$product->name.' tidak mencukupi'
         );
     }
 
         // SIMPAN DETAIL PESANAN
         OrderItem::create([
-            'order_id' => $order->id,
-            'product_id' => $productId,
-            'qty' => $item['qty'],
-            'harga' => $item['harga']
-        ]);
+        'order_id' => $order->id,
+        'product_id' => $productId,
+        'quantity' => $item['quantity'],
+        'price' => $item['price']
+    ]);
 
         // KURANGI STOK
-        $product->stok -= $item['qty'];
+        $product->stock -= $item['quantity'];
         $product->save();
     }
         // KOSONGKAN KERANJANG

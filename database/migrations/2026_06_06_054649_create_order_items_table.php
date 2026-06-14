@@ -19,9 +19,9 @@ return new class extends Migration
                   ->constrained()
                   ->onDelete('cascade');
 
-            $table->integer('qty');
+            $table->integer('quantity');
 
-            $table->integer('harga');
+            $table->integer('price');
 
             $table->timestamps();
         });

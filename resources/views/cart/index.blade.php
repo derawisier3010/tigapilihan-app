@@ -26,7 +26,7 @@
 
         @foreach ($cart as $id => $item)
         @php 
-            $subtotal = $item['harga'] * $item['qty'];
+            $subtotal = $item['price'] * $item['quantity'];
             $total += $subtotal;
         @endphp
 
@@ -36,17 +36,17 @@
             <td style="display:flex; align-items:center; gap:15px;">
                 
                 <div style="width:60px; height:60px; background:#eee; display:flex; align-items:center; justify-content:center;">
-                    @if($item['gambar'])
-                        <img src="{{ asset('images/'.$item['gambar']) }}" style="max-width:100%; max-height:100%;">
+                    @if($item['image'])
+                        <img src="{{ asset('images/'.$item['image']) }}" style="max-width:100%; max-height:100%;">
                     @endif
                 </div>
 
-                {{ $item['nama'] }}
+                {{ $item['name'] }}
             </td>
 
             <!-- HARGA -->
             <td align="center">
-                Rp {{ number_format($item['harga'], 0, ',', '.') }}
+                Rp {{ number_format($item['price'], 0, ',', '.') }}
             </td>
 
             <!-- JUMLAH -->
@@ -57,7 +57,7 @@
                         <button>-</button>
                     </a>
 
-                    {{ $item['qty'] }}
+                    {{ $item['quantity'] }}
 
                     <a href="{{ route('cart.increase', $id) }}">
                         <button>+</button>

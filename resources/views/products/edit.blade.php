@@ -39,31 +39,40 @@
 
             <!-- NAMA -->
             <label>Nama Produk</label>
-            <input type="text" name="nama" value="{{ $product->nama }}" required
+            <input type="text" name="name" value="{{ $product->name }}" required
                 style="width:100%; padding:10px; margin-top:5px; margin-bottom:15px; border-radius:8px; border:1px solid #ccc;">
 
             <!-- HARGA -->
             <label>Harga</label>
-            <input type="number" name="harga" value="{{ $product->harga }}" required
+            <input type="number" name="price" value="{{ $product->price }}" required
                 style="width:100%; padding:10px; margin-top:5px; margin-bottom:15px; border-radius:8px; border:1px solid #ccc;">
 
             <!-- STOK -->
             <label>Stok</label>
-            <input type="number" name="stok" value="{{ $product->stok }}" required
+            <input type="number" name="stock" value="{{ $product->stock }}" required
                 style="width:100%; padding:10px; margin-top:5px; margin-bottom:15px; border-radius:8px; border:1px solid #ccc;">
 
             <!-- KATEGORI -->
             <label>Kategori</label>
-            <select name="kategori"
+            <select name="category"
                 style="width:100%; padding:10px; margin-top:5px; margin-bottom:20px; border-radius:8px; border:1px solid #ccc;">
 
-                <option value="Minyak Goreng" {{ $product->kategori == 'Minyak Goreng' ? 'selected' : '' }}>Minyak</option>
-                <option value="Gula" {{ $product->kategori == 'Gula' ? 'selected' : '' }}>Gula</option>
-                <option value="Daging Ayam" {{ $product->kategori == 'Daging Ayam' ? 'selected' : '' }}>Daging Ayam</option>
-                <option value="Daging Sapi" {{ $product->kategori == 'Daging Sapi' ? 'selected' : '' }}>Daging Sapi</option>
-                <option value="Lainnya" {{ $product->kategori == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                <option value="Minyak Goreng" {{ $product->category == 'Minyak Goreng' ? 'selected' : '' }}>Minyak</option>
+                <option value="Gula" {{ $product->category == 'Gula' ? 'selected' : '' }}>Gula</option>
+                <option value="Daging Ayam" {{ $product->category == 'Daging Ayam' ? 'selected' : '' }}>Daging Ayam</option>
+                <option value="Daging Sapi" {{ $product->category == 'Daging Sapi' ? 'selected' : '' }}>Daging Sapi</option>
+                <option value="Lainnya" {{ $product->category == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
 
             </select>
+
+            <!-- DESKRIPSI PRODUK -->
+            <label>Deskripsi Produk</label>
+
+            <textarea name="description"
+                rows="4"
+                style="width:100%; padding:10px; margin-top:5px; margin-bottom:20px; border-radius:8px; border:1px solid #ccc;">
+                {{ $product->description }}
+            </textarea>
 
             <!-- BUTTON -->
             <button type="submit" style="

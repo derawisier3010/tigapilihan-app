@@ -22,12 +22,12 @@ class ProductController extends Controller
     {
         $data = $request->all();
 
-    if ($request->hasFile('gambar')) {
-        $file = $request->file('gambar');
-        $filename = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('images'), $filename);
-        $data['gambar'] = $filename;
-    }
+   if ($request->hasFile('image')) {
+    $file = $request->file('image');
+    $filename = time() . '.' . $file->getClientOriginalExtension();
+    $file->move(public_path('images'), $filename);
+    $data['image'] = $filename;
+}
 
     Product::create($data);
 

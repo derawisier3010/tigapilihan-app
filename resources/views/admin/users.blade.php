@@ -33,7 +33,7 @@
         <tr>
             <td>{{ $user->name }}</td>
             <td>{{ $user->email }}</td>
-            <td>{{ $user->no_hp }}</td>
+            <td>{{ $user->phone }}</td>
             <td>{{ $user->role }}</td>
 
            <td style="display:flex; gap:5px;">

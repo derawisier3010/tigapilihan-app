@@ -83,18 +83,20 @@ flex-wrap:wrap;
 
         @foreach ($orders as $o)
         <tr>
-            <td>{{ $o->nama }}</td>
-            <td>{{ $o->alamat }}</td>
-            <td>{{ $o->no_hp }}</td>
-            <td>{{ $o->metode }}</td>
-            <td>Rp {{ number_format($o->total, 0, ',', '.') }}</td>
+            <td>{{ $o->customer_name }}</td>
+            <td>{{ $o->address }}</td>
+            <td>{{ $o->phone }}</td>
+            <td>{{ $o->payment_method }}</td>
+            <td>Rp {{ number_format($o->total_amount, 0, ',', '.') }}</td>
 
             <!-- STATUS -->
             <td>
-                @if($o->status == 'pending')
+                @if($o->order_status == 'pending')
                     <span style="color:red;">Pending</span>
-                @elseif($o->status == 'diproses')
+
+                @elseif($o->order_status == 'diproses')
                     <span style="color:orange;">Diproses</span>
+
                 @else
                     <span style="color:green;">Selesai</span>
                 @endif

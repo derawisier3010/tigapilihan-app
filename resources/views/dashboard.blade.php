@@ -126,16 +126,16 @@
                 align-items:center;
                 background:#f8f8f8;
             ">
-                <img src="{{ asset('images/'.$p->gambar) }}"
-                     style="max-width:90%; max-height:90%;">
+                <img src="{{ asset('images/'.$p->image) }}"
+                    style="max-width:90%; max-height:90%;">
             </div>
 
             <!-- DETAIL -->
            <div style="padding:15px;">
-                <b>{{ $p->nama }}</b>
+                <b>{{ $p->name }}</b>
 
                 <p style="color:#ff7a00; font-weight:bold;">
-                    Rp {{ number_format($p->harga, 0, ',', '.') }}
+                    Rp {{ number_format($p->price, 0, ',', '.') }}
                 </p>
 
                 <p style="
@@ -143,10 +143,10 @@
                     color:gray;
                     margin-bottom:10px;
                 ">
-                    Stok: {{ $p->stok }}
+                    Stok: {{ $p->stock }}
                 </p>
 
-              @if($p->stok > 0)
+              @if($p->stock > 0)
 
                 <form action="{{ route('cart.add', $p->id) }}" method="POST">
                     @csrf

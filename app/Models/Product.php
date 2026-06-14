@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable = [
-        'nama',
-        'harga',
-        'stok',
-        'kategori',
-        'gambar'
-    ];
+    'name',
+    'price',
+    'stock',
+    'category',
+    'image',
+    'description'
+];
 
     public function orderItems()
     {

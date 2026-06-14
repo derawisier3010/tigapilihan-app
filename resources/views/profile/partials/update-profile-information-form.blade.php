@@ -40,27 +40,27 @@
         </div>
 
         <!-- No HP -->
-        <div>
-            <x-input-label for="no_hp" value="No HP" />
+        <x-input-label for="phone" value="No HP" />
             <x-text-input
-                id="no_hp"
-                name="no_hp"
+                id="phone"
+                name="phone"
                 type="text"
                 class="mt-1 block w-full"
-                :value="old('no_hp', $user->no_hp)"
+                :value="old('phone', $user->phone)"
             />
-        </div>
 
         <!-- Alamat -->
         <div>
-            <x-input-label for="alamat" value="Alamat" />
+            <x-input-label for="address" value="Alamat" />
 
-            <textarea
-                id="alamat"
-                name="alamat"
+           <textarea
+                id="address"
+                name="address"
                 class="mt-1 block w-full border-gray-300 rounded-md"
                 rows="4"
-            >{{ old('alamat', $user->alamat) }}</textarea>
+            >{{ old('address', $user->address) }}
+        
+        </textarea>
         </div>
 
         <div class="flex items-center gap-4">

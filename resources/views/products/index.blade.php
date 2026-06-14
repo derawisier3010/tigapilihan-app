@@ -39,7 +39,7 @@
     ">
 
         <!-- GAMBAR -->
-        @if($p->gambar)
+        @if($p->image)
             <div style="
                 width:100%;
                 height:150px;
@@ -49,7 +49,7 @@
                 background:#f1f1f1;
                 border-bottom:1px solid #eee;
             ">
-                <img src="{{ asset('images/'.$p->gambar) }}"
+                <img src="{{ asset('images/'.$p->image) }}"
                      style="max-width:100%; max-height:100%; object-fit:contain;">
             </div>
         @endif
@@ -57,18 +57,18 @@
         <!-- DETAIL -->
         <div style="padding:10px;">
 
-            <h4 style="margin:5px 0;">{{ $p->nama }}</h4>
+            <h4 style="margin:5px 0;">{{ $p->name }}</h4>
 
             <p style="color:#ff7a00; font-weight:bold;">
-                Rp {{ number_format($p->harga, 0, ',', '.') }}
+                Rp {{ number_format($p->price, 0, ',', '.') }}
             </p>
 
             <p style="font-size:12px; color:gray;">
-                {{ $p->kategori }}
+                {{ $p->category }}
             </p>
 
             <p style="font-size:12px;">
-                Stok: {{ $p->stok }}
+                Stok: {{ $p->stock }}
             </p>
 
             <!-- KERANJANG -->

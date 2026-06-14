@@ -54,21 +54,22 @@
             <div style="margin-bottom:15px;">
                 <label>Alamat</label>
                 <textarea readonly
-style="
-width:100%;
-padding:10px;
-margin-top:5px;
-background:#f5f5f5;
-border-radius:6px;
-border:1px solid #ccc;
-">{{ auth()->user()->alamat }}</textarea>
+                    style="
+                    width:100%;
+                    padding:10px;
+                    margin-top:5px;
+                    background:#f5f5f5;
+                    border-radius:6px;
+                    border:1px solid #ccc;
+                    ">{{ auth()->user()->address }}
+                    </textarea>
             </div>
 
             <!-- NO HP -->
             <div style="margin-bottom:15px;">
                 <label>Nomor HP</label>
                 <input type="text"
-       value="{{ auth()->user()->no_hp }}"
+       value="{{ auth()->user()->phone }}"
        readonly
        style="
         width:100%;

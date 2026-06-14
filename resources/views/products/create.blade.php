@@ -21,7 +21,7 @@
         <!-- NAMA -->
         <div style="margin-bottom:15px;">
             <label>Nama Produk</label>
-            <input type="text" name="nama" required
+            <input type="text" name="name" required
                 style="
                 width:100%;
                 padding:10px;
@@ -34,7 +34,7 @@
         <!-- HARGA -->
         <div style="margin-bottom:15px;">
             <label>Harga</label>
-            <input type="number" name="harga" required
+            <input type="number" name="price" required
                 style="
                 width:100%;
                 padding:10px;
@@ -47,7 +47,7 @@
         <!-- STOK -->
         <div style="margin-bottom:15px;">
             <label>Stok</label>
-            <input type="number" name="stok" required
+            <input type="number" name="stock" required
                 style="
                 width:100%;
                 padding:10px;
@@ -60,7 +60,7 @@
         <!-- KATEGORI -->
         <div style="margin-bottom:15px;">
             <label>Kategori</label>
-            <select name="kategori" required
+            <select name="category" required
                 style="
                 width:100%;
                 padding:10px;
@@ -76,10 +76,25 @@
             </select>
         </div>
 
+        <!-- DESKRIPSI PRODUK -->
+        <div style="margin-bottom:15px;">
+            <label>Deskripsi Produk</label>
+
+            <textarea name="description"
+                rows="4"
+                style="
+                width:100%;
+                padding:10px;
+                border:1px solid #ccc;
+                border-radius:6px;
+                margin-top:5px;
+                "></textarea>
+        </div>
+
         <!-- GAMBAR -->
         <div style="margin-bottom:20px;">
             <label>Gambar Produk</label>
-            <input type="file" name="gambar"
+            <input type="file" name="image"
                 style="margin-top:5px;">
         </div>
 

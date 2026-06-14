@@ -14,13 +14,13 @@ class CartController extends Controller
     $cart = session()->get('cart', []);
 
     if(isset($cart[$id])) {
-        $cart[$id]['qty'] += 1;
+        $cart[$id]['quantity'] += 1;
     } else {
         $cart[$id] = [
-            "nama" => $product->nama,
-            "harga" => $product->harga,
-            "gambar" => $product->gambar,
-            "qty" => 1
+            "name" => $product->name,
+            "price" => $product->price,
+            "image" => $product->image,
+            "quantity" => 1
         ];
     }
 
@@ -34,7 +34,7 @@ public function increase($id)
     $cart = session()->get('cart');
 
     if(isset($cart[$id])) {
-        $cart[$id]['qty']++;
+        $cart[$id]['quantity']++;
         session()->put('cart', $cart);
     }
 
@@ -46,8 +46,8 @@ public function decrease($id)
     $cart = session()->get('cart');
 
     if(isset($cart[$id])) {
-        if($cart[$id]['qty'] > 1) {
-            $cart[$id]['qty']--;
+        if($cart[$id]['quantity'] > 1) {
+            $cart[$id]['quantity']--;
         } else {
             unset($cart[$id]);
         }

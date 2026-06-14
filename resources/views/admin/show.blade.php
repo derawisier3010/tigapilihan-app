@@ -27,9 +27,17 @@
 
         <hr>
 
-        <p><b>Nama:</b> {{ $order->nama }}</p>
-        <p><b>Alamat:</b> {{ $order->alamat }}</p>
-        <p><b>No HP:</b> {{ $order->no_hp }}</p>
+        <p><b>Nama:</b>
+            {{ $order->customer_name ?? ($order->user->name ?? '-') }}
+        </p>
+
+        <p><b>Alamat:</b>
+            {{ $order->address ?? ($order->user->address ?? '-') }}
+        </p>
+
+        <p><b>No HP:</b>
+            {{ $order->phone ?? ($order->user->phone ?? '-') }}
+        </p>
 
         <h3 style="margin-top:20px;">Detail Pesanan</h3>
 
@@ -49,24 +57,24 @@
 
             @foreach($order->items as $item)
             <tr>
-                <td>{{ $item->product->nama }}</td>
-                <td>{{ $item->qty }}</td>
-                <td>Rp {{ number_format($item->harga,0,',','.') }}</td>
+                <td>{{ $item->product->name }}</td>
+                <td>{{ $item->quantity }}</td>
+                <td>Rp {{ number_format($item->price,0,',','.') }}</td>
                 <td>
-                    Rp {{ number_format($item->qty * $item->harga,0,',','.') }}
+                    Rp {{ number_format($item->quantity * $item->price,0,',','.') }}
                 </td>
             </tr>
             @endforeach
 
         </table>
 
-        <p><b>Metode Pembayaran:</b> {{ $order->metode }}</p>
-        <p><b>Total:</b> Rp {{ number_format($order->total, 0, ',', '.') }}</p>
+        <p><b>Metode Pembayaran:</b> {{ $order->payment_method }}</p>
+        <p><b>Total:</b> Rp {{ number_format($order->total_amount, 0, ',', '.') }}</p>
 
         <p><b>Status:</b> 
-            @if($order->status == 'pending')
+            @if($order->order_status == 'pending')
                 <span style="color:red;">Pending</span>
-            @elseif($order->status == 'diproses')
+            @elseif($order->order_status == 'diproses')
                 <span style="color:orange;">Diproses</span>
             @else
                 <span style="color:green;">Selesai</span>
@@ -74,7 +82,7 @@
         </p>
 
 <!-- BUTTON STATUS -->
-        @if($order->status == 'pending')
+        @if($order->order_status == 'pending')
             <div style="margin-top:15px;">
                 <a href="{{ route('admin.update', $order->id) }}"
                    style="
@@ -89,7 +97,7 @@
                 </a>
             </div>
 
- @elseif($order->status == 'diproses')
+ @elseif($order->order_status == 'diproses')
             <div style="margin-top:15px;">
                 <a href="{{ route('admin.update', $order->id) }}"
                    style="

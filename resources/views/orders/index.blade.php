@@ -40,35 +40,35 @@
                 <td>{{ $order->id }}</td>
 
                 <td>
-                    Rp {{ number_format($order->total,0,',','.') }}
+                    Rp {{ number_format($order->total_amount,0,',','.') }}
                 </td>
 
-                <td>{{ $order->metode }}</td>
+                <td>{{ $order->payment_method }}</td>
 
                 <td>
 
-                    @if($order->status == 'pending')
+                    @if($order->order_status == 'pending')
                         <span style="color:orange;font-weight:bold;">
                             Pending
                         </span>
 
-                    @elseif($order->status == 'diproses')
+                    @elseif($order->order_status == 'diproses')
                         <span style="color:blue;font-weight:bold;">
                             Diproses
                         </span>
 
-                    @elseif($order->status == 'dikirim')
+                    @elseif($order->order_status == 'dikirim')
                         <span style="color:#ff7a00;font-weight:bold;">
                             Dikirim
                         </span>
 
-                    @elseif($order->status == 'selesai')
+                    @elseif($order->order_status == 'selesai')
                         <span style="color:green;font-weight:bold;">
                             Selesai
                         </span>
 
                     @else
-                        {{ ucfirst($order->status) }}
+                        {{ ucfirst($order->order_status) }}
                     @endif
 
                 </td>
