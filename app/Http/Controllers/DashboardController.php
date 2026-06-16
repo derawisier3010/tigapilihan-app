@@ -9,14 +9,14 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $kategori = $request->kategori;
+        $category = $request->category;
 
-        if ($kategori) {
-            $products = Product::where('kategori', $kategori)->latest()->get();
+        if ($category) {
+            $products = Product::where('category', $category)->latest()->get();
         } else {
             $products = Product::latest()->get();
         }
 
-        return view('dashboard', compact('products', 'kategori'));
+        return view('dashboard', compact('products', 'category'));
     }
 }

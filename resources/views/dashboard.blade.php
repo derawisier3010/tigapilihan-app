@@ -1,3 +1,7 @@
+@php
+use Illuminate\Support\Str;
+@endphp
+
 <x-app-layout>
 
 <x-slot name="header">
@@ -39,56 +43,56 @@
         <div style="
             padding:10px 15px;
             border-radius:10px;
-            background: {{ empty($kategori) ? '#ff7a00' : 'white' }};
-            color: {{ empty($kategori) ? 'white' : 'black' }};
+            background: {{ empty($category) ? '#ff7a00' : 'white' }};
+            color: {{ empty($category) ? 'white' : 'black' }};
         ">
             Semua
         </div>
     </a>
 
     <!-- MINYAK -->
-    <a href="/dashboard?kategori=Minyak Goreng" style="text-decoration:none;">
+    <a href="/dashboard?category=Minyak Goreng" style="text-decoration:none;">
         <div style="
             padding:10px 15px;
             border-radius:10px;
-            background: {{ $kategori == 'Minyak Goreng' ? '#ff7a00' : 'white' }};
-            color: {{ $kategori == 'Minyak Goreng' ? 'white' : 'black' }};
+            background: {{ $category == 'Minyak Goreng' ? '#ff7a00' : 'white' }};
+            color: {{ $category == 'Minyak Goreng' ? 'white' : 'black' }};
         ">
             Minyak
         </div>
     </a>
 
     <!-- GULA -->
-    <a href="/dashboard?kategori=Gula" style="text-decoration:none;">
+    <a href="/dashboard?category=Gula" style="text-decoration:none;">
         <div style="
             padding:10px 15px;
             border-radius:10px;
-            background: {{ $kategori == 'Gula' ? '#ff7a00' : 'white' }};
-            color: {{ $kategori == 'Gula' ? 'white' : 'black' }};
+            background: {{ $category == 'Gula' ? '#ff7a00' : 'white' }};
+            color: {{ $category == 'Gula' ? 'white' : 'black' }};
         ">
             Gula
         </div>
     </a>
 
     <!-- AYAM -->
-    <a href="/dashboard?kategori=Daging Ayam" style="text-decoration:none;">
+    <a href="/dashboard?category=Daging Ayam" style="text-decoration:none;">
         <div style="
             padding:10px 15px;
             border-radius:10px;
-            background: {{ $kategori == 'Daging Ayam' ? '#ff7a00' : 'white' }};
-            color: {{ $kategori == 'Daging Ayam' ? 'white' : 'black' }};
+            background: {{ $category == 'Daging Ayam' ? '#ff7a00' : 'white' }};
+            color: {{ $category == 'Daging Ayam' ? 'white' : 'black' }};
         ">
             Daging Ayam
         </div>
     </a>
 
     <!-- SAPI -->
-    <a href="/dashboard?kategori=Daging Sapi" style="text-decoration:none;">
+    <a href="/dashboard?category=Daging Sapi" style="text-decoration:none;">
         <div style="
             padding:10px 15px;
             border-radius:10px;
-            background: {{ $kategori == 'Daging Sapi' ? '#ff7a00' : 'white' }};
-            color: {{ $kategori == 'Daging Sapi' ? 'white' : 'black' }};
+            background: {{ $category == 'Daging Sapi' ? '#ff7a00' : 'white' }};
+            color: {{ $category == 'Daging Sapi' ? 'white' : 'black' }};
         ">
             Daging Sapi
         </div>
@@ -100,7 +104,7 @@
 
     <!--PRODUK -->
     <div style="margin-top:30px;">
-        <h3>Produk Terbaru</h3>
+        <h3>Produk</h3>
 
         <div style="
             display:flex;
@@ -133,6 +137,16 @@
             <!-- DETAIL -->
            <div style="padding:15px;">
                 <b>{{ $p->name }}</b>
+
+                <b>{{ $p->name }}</b>
+
+            <p style="
+                font-size:13px;
+                color:#666;
+                margin-top:5px;
+            ">
+                {{ Str::limit($p->description, 50) }}
+            </p>
 
                 <p style="color:#ff7a00; font-weight:bold;">
                     Rp {{ number_format($p->price, 0, ',', '.') }}

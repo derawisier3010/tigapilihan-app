@@ -23,6 +23,7 @@
             Kembali ke Dashboard
         </a>
 
+         <!-- INFORMASI PELANGGAN -->
         <h3 style="margin-top:20px;">Informasi Pelanggan</h3>
 
         <hr>
@@ -43,6 +44,7 @@
 
         <hr>
 
+         <!-- PRODUK -->
         <h4>Produk yang Dibeli</h4>
 
         <table border="1" width="100%" cellpadding="8"
@@ -68,6 +70,47 @@
 
         </table>
 
+         <!-- RIWAYAT PESANAN -->
+        <h3 style="margin-top:30px;">
+            Riwayat Status Pesanan
+        </h3>
+
+        <table width="100%" border="1" cellpadding="10" cellspacing="0">
+
+            <tr style="background:#f5f5f5;">
+                <th>Admin</th>
+                <th>Status Lama</th>
+                <th>Status Baru</th>
+                <th>Waktu</th>
+            </tr>
+
+            @foreach($order->logs as $log)
+
+            <tr>
+
+                <td>
+                    {{ $log->admin->name }}
+                </td>
+
+                <td>
+                    {{ $log->old_status }}
+                </td>
+
+                <td>
+                    {{ $log->new_status }}
+                </td>
+
+                <td>
+                    {{ $log->created_at }}
+                </td>
+
+            </tr>
+
+            @endforeach
+
+        </table>
+
+         <!-- METODE PEMBAYARAN -->
         <p><b>Metode Pembayaran:</b> {{ $order->payment_method }}</p>
         <p><b>Total:</b> Rp {{ number_format($order->total_amount, 0, ',', '.') }}</p>
 

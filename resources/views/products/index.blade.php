@@ -1,3 +1,7 @@
+@php
+use Illuminate\Support\Str;
+@endphp
+
 <x-app-layout>
 
 <x-slot name="header">
@@ -59,12 +63,16 @@
 
             <h4 style="margin:5px 0;">{{ $p->name }}</h4>
 
-            <p style="color:#ff7a00; font-weight:bold;">
-                Rp {{ number_format($p->price, 0, ',', '.') }}
+            <p style="
+                font-size:12px;
+                color:#666;
+                margin:5px 0;
+            ">
+                {{ \Illuminate\Support\Str::limit($p->description, 50) }}
             </p>
 
-            <p style="font-size:12px; color:gray;">
-                {{ $p->category }}
+            <p style="color:#ff7a00; font-weight:bold;">
+                Rp {{ number_format($p->price, 0, ',', '.') }}
             </p>
 
             <p style="font-size:12px;">

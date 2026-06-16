@@ -28,8 +28,19 @@
             ← Kembali ke Keranjang
         </a>
 
-        <h3 style="margin-bottom:15px;">Isi data kamu dulu Yuk!</h3>
-
+        @if(session('error'))
+        <div style="
+            background:#f8d7da;
+            color:#721c24;
+            padding:12px;
+            margin-bottom:15px;
+            border-radius:8px;
+            border:1px solid #f5c6cb;
+        ">
+            {{ session('error') }}
+        </div>
+        @endif
+        
         <form action="{{ route('checkout.process') }}" method="POST">
             @csrf
 
@@ -69,16 +80,16 @@
             <div style="margin-bottom:15px;">
                 <label>Nomor HP</label>
                 <input type="text"
-       value="{{ auth()->user()->phone }}"
-       readonly
-       style="
-        width:100%;
-        padding:10px;
-        margin-top:5px;
-        background:#f5f5f5;
-        border-radius:6px;
-        border:1px solid #ccc;
-       ">
+                value="{{ auth()->user()->phone }}"
+                readonly
+                style="
+                    width:100%;
+                    padding:10px;
+                    margin-top:5px;
+                    background:#f5f5f5;
+                    border-radius:6px;
+                    border:1px solid #ccc;
+                ">
             </div>
 
             <!-- METODE PEMBAYARAN -->

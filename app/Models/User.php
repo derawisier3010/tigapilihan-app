@@ -49,4 +49,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function orderLogs()
+    {
+        return $this->hasMany(OrderLog::class, 'admin_id');
+    }
 }
+
