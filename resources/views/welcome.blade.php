@@ -26,7 +26,7 @@
     <!-- LEFT -->
 <div style="flex:1; padding-right:50px;">
     <h1 style="color:#ff7a00; font-size:40px;">
-        Selamat Datang <br> di TigaPilihan.ptk!
+        Halo!! Selamat Datang <br> di TigaPilihan.ptk!
     </h1>
 
     <img src="{{ asset('images/banner.png') }}" 
