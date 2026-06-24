@@ -12,10 +12,14 @@
         <p>Keranjang kosong</p>
     @else
 
+    <form action="{{ route('checkout.index') }}" method="POST">
+    @csrf
+
     <table width="100%" cellpadding="15" style="border-collapse:collapse;">
 
         <!-- HEADER -->
         <tr style="background:#ff7a00; color:black;">
+            <th>Pilih</th>
             <th align="left">Produk</th>
             <th>Harga</th>
             <th>Jumlah</th>
@@ -31,6 +35,17 @@
         @endphp
 
         <tr style="border-bottom:1px solid #ddd;">
+
+            <td align="center">
+                <input
+                    type="checkbox"
+                    class="product-check"
+                    data-subtotal="{{ $subtotal }}"
+                    name="selected_items[]"
+                    value="{{ $id }}"
+                    checked
+                >
+            </td>
 
             <!-- PRODUK -->
             <td style="display:flex; align-items:center; gap:15px;">
@@ -53,14 +68,28 @@
             <td align="center">
                 <div style="display:flex; justify-content:center; align-items:center; gap:5px;">
 
-                    <a href="{{ route('cart.decrease', $id) }}">
-                        <button>-</button>
+                    <a href="{{ route('cart.decrease', $id) }}"
+                    style="
+                    padding:5px 10px;
+                    background:#eee;
+                    border-radius:5px;
+                    text-decoration:none;
+                    color:black;
+                    ">
+                    -
                     </a>
 
                     {{ $item['quantity'] }}
 
-                    <a href="{{ route('cart.increase', $id) }}">
-                        <button>+</button>
+                    <a href="{{ route('cart.increase', $id) }}"
+                    style="
+                    padding:5px 10px;
+                    background:#eee;
+                    border-radius:5px;
+                    text-decoration:none;
+                    color:black;
+                    ">
+                    +
                     </a>
 
                 </div>
@@ -78,26 +107,56 @@
 
     <!-- TOTAL -->
     <div style="text-align:right; margin-top:20px;">
-        <h2>Total: Rp {{ number_format($total, 0, ',', '.') }}</h2>
+        <h2 id="total-price">
+            Total: Rp {{ number_format($total, 0, ',', '.') }}
+        </h2>
 
-        <a href="{{ route('checkout.index') }}">
-            <button style="
-                background:#ff7a00;
-                color:white;
-                padding:12px 25px;
-                border:none;
-                border-radius:8px;
-                font-size:16px;
-                cursor:pointer;
-            ">
-                Checkout Sekarang >
-            </button>
-        </a>
+        <button type="submit" style="
+            background:#ff7a00;
+            color:white;
+            padding:12px 25px;
+            border:none;
+            border-radius:8px;
+            font-size:16px;
+            cursor:pointer;
+        ">
+            Checkout Sekarang >
+        </button>
     </div>
+
+   </form>
 
     @endif
 
-</div>
+    </div>
 
+    <script>
+
+        function updateTotal() {
+
+            let total = 0;
+
+            document.querySelectorAll('.product-check').forEach(function(item){
+
+                if(item.checked){
+                    total += parseInt(item.dataset.subtotal);
+                }
+
+            });
+
+            document.getElementById('total-price').innerHTML =
+                'Total: Rp ' + total.toLocaleString('id-ID');
+
+        }
+
+        document.querySelectorAll('.product-check').forEach(function(item){
+
+            item.addEventListener('change', updateTotal);
+
+        });
+
+        updateTotal();
+
+        </script>
 
 </x-app-layout>

@@ -58,10 +58,10 @@ CHECKOUT
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/checkout', [CheckoutController::class, 'index'])
+    Route::match(['get', 'post'], '/checkout', [CheckoutController::class, 'index'])
         ->name('checkout.index');
 
-    Route::post('/checkout', [CheckoutController::class, 'process'])
+    Route::post('/checkout/process', [CheckoutController::class, 'process'])
         ->name('checkout.process');
 
 });

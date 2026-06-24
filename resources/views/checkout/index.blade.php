@@ -92,20 +92,111 @@
                 ">
             </div>
 
-            <!-- METODE PEMBAYARAN -->
-            <div style="margin-bottom:20px;">
-                <label style="display:block; margin-bottom:8px;">Metode Pembayaran</label>
+            <!-- PRODUK YANG DICHECKOUT -->
 
-                <label style="display:block; margin-bottom:5px;">
-                    <input type="radio" name="metode" value="COD" required>
-                    COD (Bayar di Tempat)
-                </label>
+            <h3 style="margin-bottom:15px;">
+                Produk yang Dipilih
+            </h3>
 
-                <label>
-                    <input type="radio" name="metode" value="Transfer">
-                    Transfer Bank
-                </label>
+            @php $total = 0; @endphp
+
+            <table width="100%" cellpadding="10" cellspacing="0" border="1" style="margin-bottom:20px;">
+
+            <tr>
+                <th>Produk</th>
+                <th>Qty</th>
+                <th>Subtotal</th>
+            </tr>
+
+            @foreach($cart as $item)
+
+            @php
+                $subtotal = $item['price'] * $item['quantity'];
+                $total += $subtotal;
+            @endphp
+
+            <tr>
+                <td>{{ $item['name'] }}</td>
+
+                <td align="center">
+                    {{ $item['quantity'] }}
+                </td>
+
+                <td align="right">
+                    Rp {{ number_format($subtotal,0,',','.') }}
+                </td>
+            </tr>
+
+            @endforeach
+
+            </table>
+
+            <div style="
+                background:#fff3cd;
+                padding:12px;
+                border-radius:8px;
+                margin-bottom:20px;
+                font-weight:bold;
+            ">
+                Total Belanja:
+                Rp {{ number_format($total,0,',','.') }}
             </div>
+
+
+            <!-- METODE PEMBAYARAN -->
+           <label style="display:block; margin-bottom:5px;">
+                <input type="radio"
+                    name="metode"
+                    value="COD"
+                    required>
+
+                COD (Bayar di Tempat)
+            </label>
+
+            <label style="display:block; margin-bottom:10px;">
+                <input type="radio"
+                    name="metode"
+                    value="Transfer"
+                    id="transfer-radio">
+
+                Transfer Bank
+            </label>
+
+            <div id="transfer-info" style="
+                    display:none;
+                    background:#f8f9fa;
+                    border:1px solid #ddd;
+                    padding:15px;
+                    border-radius:10px;
+                    margin-top:10px;
+                ">
+
+                    <h4 style="margin-bottom:10px;">
+                        Informasi Transfer
+                    </h4>
+
+                    <p>
+                        <b>MyBlu BCA</b>
+                    </p>
+
+                    <p>
+                        No Rekening:
+                        <b>005823525602 </b>
+                    </p>
+
+                    <p>
+                        Atas Nama:
+                        <b>Ratna Dwi Gita Stefani</b>
+                    </p>
+
+                    <hr>
+
+                    <small style="color:gray;">
+                        Setelah melakukan transfer,
+                        admin akan memverifikasi pembayaran Anda.
+                    </small>
+
+                </div>
 
             <!-- BUTTON -->
             <div style="text-align:right;">
@@ -127,5 +218,35 @@
     </div>
 
 </div>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const transferRadio =
+        document.getElementById('transfer-radio');
+
+    const transferInfo =
+        document.getElementById('transfer-info');
+
+    document.querySelectorAll(
+        'input[name="metode"]'
+    ).forEach(function(radio){
+
+        radio.addEventListener('change', function(){
+
+            if(transferRadio.checked){
+                transferInfo.style.display = 'block';
+            } else {
+                transferInfo.style.display = 'none';
+            }
+
+        });
+
+    });
+
+});
+
+</script>
 
 </x-app-layout>

@@ -138,8 +138,6 @@ use Illuminate\Support\Str;
            <div style="padding:15px;">
                 <b>{{ $p->name }}</b>
 
-                <b>{{ $p->name }}</b>
-
             <p style="
                 font-size:13px;
                 color:#666;

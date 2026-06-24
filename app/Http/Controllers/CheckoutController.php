@@ -10,16 +10,49 @@ use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $cart = session()->get('cart', []);
+
+        if ($request->isMethod('post')) {
+
+            $selectedItems = $request->selected_items ?? [];
+
+            if (empty($selectedItems)) {
+                return redirect()->back()
+                    ->with('error', 'Pilih minimal 1 produk untuk checkout');
+            }
+
+            $selectedCart = [];
+
+            foreach ($selectedItems as $id) {
+
+                if (isset($cart[$id])) {
+                    $selectedCart[$id] = $cart[$id];
+                }
+
+            }
+
+            session()->put('checkout_cart', $selectedCart);
+
+            $cart = $selectedCart;
+        } else {
+
+            $cart = session()->get('checkout_cart', []);
+
+        }
 
         return view('checkout.index', compact('cart'));
     }
 
     public function process(Request $request)
     {
-        $cart = session()->get('cart', []);
+        $cart = session()->get('checkout_cart', []);
+
+        if (empty($cart)) {
+            return redirect()->route('cart.index')
+                ->with('error', 'Keranjang checkout kosong');
+        }
 
         $total = 0;
 
@@ -29,45 +62,53 @@ class CheckoutController extends Controller
 
         $user = Auth::user();
 
-        // SIMPAN ORDER
         $order = Order::create([
-        'user_id' => $user->id,
-        'customer_name' => $user->name,
-        'address' => $user->address,
-        'phone' => $user->phone,
-        'payment_method' => $request->metode,
-        'total_amount' => $total,
-        'order_status' => 'pending',
-        'order_date' => now(),
-    ]);
+            'user_id' => $user->id,
+            'customer_name' => $user->name,
+            'address' => $user->address,
+            'phone' => $user->phone,
+            'payment_method' => $request->metode,
+            'total_amount' => $total,
+            'order_status' => 'pending',
+            'order_date' => now(),
+        ]);
 
         foreach ($cart as $productId => $item) {
 
-    $product = Product::find($productId);
+            $product = Product::find($productId);
 
-    // CEK STOK
-    if ($product->stock < $item['quantity']) {
+            if (!$product) {
+                continue;
+            }
 
-        return back()->with(
-            'error',
-            'Stok '.$product->name.' tidak mencukupi'
-        );
-    }
+            if ($product->stock < $item['quantity']) {
 
-        // SIMPAN DETAIL PESANAN
-        OrderItem::create([
-        'order_id' => $order->id,
-        'product_id' => $productId,
-        'quantity' => $item['quantity'],
-        'price' => $item['price']
-    ]);
+                return back()->with(
+                    'error',
+                    'Stok '.$product->name.' tidak mencukupi'
+                );
+            }
 
-        // KURANGI STOK
-        $product->stock -= $item['quantity'];
-        $product->save();
-    }
-        // KOSONGKAN KERANJANG
-        session()->forget('cart');
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $productId,
+                'quantity' => $item['quantity'],
+                'price' => $item['price']
+            ]);
+
+            $product->stock -= $item['quantity'];
+            $product->save();
+        }
+
+        $mainCart = session()->get('cart', []);
+
+        foreach ($cart as $productId => $item) {
+            unset($mainCart[$productId]);
+        }
+
+        session()->put('cart', $mainCart);
+
+        session()->forget('checkout_cart');
 
         return redirect('/products')
             ->with('success', 'Pesanan berhasil dibuat!');
