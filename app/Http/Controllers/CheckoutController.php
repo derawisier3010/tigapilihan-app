@@ -62,12 +62,29 @@ class CheckoutController extends Controller
 
         $user = Auth::user();
 
+        $transferProof = null;
+        $paymentStatus = 'Belum Dibayar';
+
+        if ($request->metode == 'Transfer') {
+
+            $request->validate([
+                'transfer_proof' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            ]);
+
+            $transferProof = $request->file('transfer_proof')
+                ->store('transfer_proofs', 'public');
+
+            $paymentStatus = 'Menunggu Verifikasi';
+        }
+
         $order = Order::create([
             'user_id' => $user->id,
             'customer_name' => $user->name,
             'address' => $user->address,
             'phone' => $user->phone,
             'payment_method' => $request->metode,
+            'transfer_proof' => $transferProof,
+            'payment_status' => $paymentStatus,
             'total_amount' => $total,
             'order_status' => 'pending',
             'order_date' => now(),

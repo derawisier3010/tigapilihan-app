@@ -4,6 +4,22 @@
     <h2>Detail Pesanan</h2>
 </x-slot>
 
+@if(session('success'))
+
+<div style="
+    background:#d4edda;
+    color:#155724;
+    padding:12px;
+    margin-bottom:20px;
+    border-radius:8px;
+">
+
+    {{ session('success') }}
+
+</div>
+
+@endif
+
 <div style="padding:30px; display:flex; justify-content:center;">
 
     <div style="
@@ -110,50 +126,250 @@
 
         </table>
 
-         <!-- METODE PEMBAYARAN -->
-        <p><b>Metode Pembayaran:</b> {{ $order->payment_method }}</p>
-        <p><b>Total:</b> Rp {{ number_format($order->total_amount, 0, ',', '.') }}</p>
+        <!-- INFORMASI PEMBAYARAN -->
+        <h3 style="margin-top:30px;">Informasi Pembayaran</h3>
 
-        <p><b>Status:</b> 
-            @if($order->order_status == 'pending')
-                <span style="color:red;">Pending</span>
-            @elseif($order->order_status == 'diproses')
-                <span style="color:orange;">Diproses</span>
-            @else
-                <span style="color:green;">Selesai</span>
-            @endif
+        <hr>
+
+        <p>
+            <b>Metode Pembayaran:</b>
+            {{ $order->payment_method }}
         </p>
 
-<!-- BUTTON STATUS -->
-        @if($order->order_status == 'pending')
-            <div style="margin-top:15px;">
-                <a href="{{ route('admin.update', $order->id) }}"
-                   style="
+        <p>
+            <b>Status Pembayaran:</b>
+
+            @if($order->payment_status == 'Belum Dibayar')
+
+                <span style="
+                    background:#dc3545;
+                    color:white;
+                    padding:5px 12px;
+                    border-radius:8px;
+                    font-weight:bold;
+                ">
+                    Belum Dibayar
+                </span>
+
+            @elseif($order->payment_status == 'Menunggu Verifikasi')
+
+                <span style="
                     background:#ffc107;
                     color:black;
-                    padding:10px 18px;
+                    padding:5px 12px;
                     border-radius:8px;
-                    text-decoration:none;
-                    display:inline-block;
-                   ">
-                    Proses Pesanan
-                </a>
-            </div>
+                    font-weight:bold;
+                ">
+                    Menunggu Verifikasi
+                </span>
 
- @elseif($order->order_status == 'diproses')
-            <div style="margin-top:15px;">
-                <a href="{{ route('admin.update', $order->id) }}"
-                   style="
+            @elseif($order->payment_status == 'Lunas')
+
+                <span style="
+                    background:#28a745;
+                    color:white;
+                    padding:4px 10px;
+                    border-radius:6px;
+                ">
+                    Lunas
+                </span>
+
+            @elseif($order->payment_status == 'Sudah Diverifikasi')
+
+                <span style="
+                    background:#28a745;
+                    color:white;
+                    padding:5px 12px;
+                    border-radius:8px;
+                    font-weight:bold;
+                ">
+                    Sudah Diverifikasi
+                </span>
+
+            @elseif($order->payment_status == 'Ditolak')
+
+                <span style="
+                    background:#dc3545;
+                    color:white;
+                    padding:5px 12px;
+                    border-radius:8px;
+                    font-weight:bold;
+                ">
+                    Ditolak
+                </span>
+
+            @endif
+
+        </p>
+
+        <p>
+            <b>Total Pembayaran :</b>
+            Rp {{ number_format($order->total_amount,0,',','.') }}
+        </p>
+
+
+        @if($order->payment_method == 'Transfer')
+
+        <hr>
+
+        <h4>Bukti Transfer</h4>
+
+        @if($order->transfer_proof)
+
+        <a href="{{ asset('storage/'.$order->transfer_proof) }}" target="_blank">
+
+            <img
+                src="{{ asset('storage/'.$order->transfer_proof) }}"
+                style="
+                    width:350px;
+                    border-radius:10px;
+                    border:1px solid #ddd;
+                    cursor:pointer;
+                    display:block;
+                    margin-bottom:20px;
+                "
+            >
+
+        </a>
+
+        @else
+
+        <p style="color:red;">
+            User belum mengupload bukti transfer.
+        </p>
+
+        @endif
+
+        @endif
+
+
+        @if($order->payment_method == 'Transfer'
+            && $order->payment_status == 'Menunggu Verifikasi')
+
+        <div style="margin-top:20px;display:flex;gap:10px;">
+
+            <a href="{{ route('admin.verify.payment',$order->id) }}"
+            style="
                     background:#28a745;
                     color:white;
                     padding:10px 18px;
                     border-radius:8px;
                     text-decoration:none;
-                    display:inline-block;
-                   ">
-                    Selesaikan Pesanan
+            ">
+                Verifikasi Pembayaran
+            </a>
+
+            <a href="{{ route('admin.reject.payment',$order->id) }}"
+            style="
+                    background:#dc3545;
+                    color:white;
+                    padding:10px 18px;
+                    border-radius:8px;
+                    text-decoration:none;
+            ">
+                Tolak Pembayaran
+            </a>
+
+        </div>
+
+        @endif
+
+<!-- BUTTON STATUS PESANAN -->
+
+        @if($order->order_status == 'pending')
+
+        <!-- KHUSUS TRANSFER -->
+
+            @if($order->payment_method == 'Transfer')
+
+                @if($order->payment_status == 'Sudah Diverifikasi')
+
+                    <a href="{{ route('admin.update', $order->id) }}"
+                    style="
+                            background:#ffc107;
+                            color:black;
+                            padding:10px 18px;
+                            border-radius:8px;
+                            text-decoration:none;
+                            display:inline-block;
+                    ">
+                        Proses Pesanan
+                    </a>
+
+                @else
+
+                    <button
+                        disabled
+                        style="
+                            background:#ccc;
+                            color:#666;
+                            padding:10px 18px;
+                            border:none;
+                            border-radius:8px;
+                            cursor:not-allowed;
+                        ">
+
+                        Menunggu Verifikasi Pembayaran
+
+                    </button>
+
+                @endif
+
+
+           <!-- KHUSUS COD -->
+
+            @else
+
+                <a href="{{ route('admin.update', $order->id) }}"
+                style="
+                        background:#ffc107;
+                        color:black;
+                        padding:10px 18px;
+                        border-radius:8px;
+                        text-decoration:none;
+                        display:inline-block;
+                ">
+                    Proses Pesanan
                 </a>
-            </div>
+
+            @endif
+
+
+        @elseif($order->order_status == 'diproses')
+
+            <a href="{{ route('admin.update', $order->id) }}"
+            style="
+                    background:#17a2b8;
+                    color:white;
+                    padding:10px 18px;
+                    border-radius:8px;
+                    text-decoration:none;
+                    display:inline-block;
+            ">
+                Kirim Barang
+            </a>
+
+        @endif
+
+
+<!-- ALASAN ADMIN  -->
+        @if($order->payment_status == 'Ditolak')
+
+        <div style="
+            background:#fdeaea;
+            padding:15px;
+            border-radius:10px;
+            margin-top:15px;
+        ">
+
+        <b>Alasan Penolakan:</b>
+
+        <br><br>
+
+        {{ $order->payment_note }}
+
+        </div>
+
         @endif
 
         <!-- BUTTON -->

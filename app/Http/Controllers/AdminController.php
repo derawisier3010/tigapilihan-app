@@ -10,34 +10,91 @@ use App\Models\OrderLog;
 
 class AdminController extends Controller
 {
-   public function index()
+   public function index(Request $request)
     {
-        $orders = Order::latest()->get();
+        $query = Order::query();
+
+        // Filter Tahun
+        if ($request->filled('year')) {
+            $query->whereYear('order_date', $request->year);
+        }
+
+        // Filter Bulan
+        if ($request->filled('month')) {
+            $query->whereMonth('order_date', $request->month);
+        }
+
+        $orders = $query
+            ->orderBy('order_date', 'desc')
+            ->get();
 
         $totalUser = User::count();
         $totalProduk = Product::count();
         $totalPesanan = Order::count();
         $pending = Order::where('order_status', 'pending')->count();
 
+        $selectedMonth = $request->month;
+        $selectedYear = $request->year;
+        $totalFilteredOrders = $orders->count();
+
         return view('admin.index', compact(
             'orders',
             'totalUser',
             'totalProduk',
             'totalPesanan',
-            'pending'
+            'pending',
+            'selectedMonth',
+            'selectedYear',
+            'totalFilteredOrders'
         ));
     }
 
-  public function updateStatus($id)
+   public function updateStatus($id)
     {
         $order = Order::findOrFail($id);
 
         $oldStatus = $order->order_status;
 
+        /*
+        |--------------------------------------------------------------------------
+        | Pending -> Diproses
+        |--------------------------------------------------------------------------
+        */
+
         if ($order->order_status == 'pending') {
+
             $order->order_status = 'diproses';
-        } elseif ($order->order_status == 'diproses') {
-            $order->order_status = 'selesai';
+
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Diproses -> Dikirim
+        |--------------------------------------------------------------------------
+        */
+
+        elseif ($order->order_status == 'diproses') {
+
+            $order->order_status = 'dikirim';
+
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Dikirim
+        |--------------------------------------------------------------------------
+        | Tidak boleh diubah admin lagi.
+        | Menunggu user menekan tombol "Pesanan Diterima"
+        |--------------------------------------------------------------------------
+        */
+
+        elseif ($order->order_status == 'dikirim') {
+
+            return back()->with(
+                'error',
+                'Pesanan sedang dalam pengiriman dan menunggu konfirmasi dari customer.'
+            );
+
         }
 
         $newStatus = $order->order_status;
@@ -45,13 +102,16 @@ class AdminController extends Controller
         $order->save();
 
         OrderLog::create([
-            'order_id' => $order->id,
-            'admin_id' => auth()->id(),
+            'order_id'   => $order->id,
+            'admin_id'   => auth()->id(),
             'old_status' => $oldStatus,
             'new_status' => $newStatus,
         ]);
 
-        return back()->with('success', 'Status berhasil diupdate');
+        return back()->with(
+            'success',
+            'Status pesanan berhasil diperbarui.'
+        );
     }
 
     public function show($id)
@@ -112,5 +172,44 @@ class AdminController extends Controller
 
         return back()->with('success', 'User berhasil dihapus');
     }
+
+    public function verifyPayment($id)
+    {
+        $order = Order::findOrFail($id);
+
+        $order->payment_status = 'Sudah Diverifikasi';
+        $order->save();
+
+        return back()->with(
+            'success',
+            'Pembayaran berhasil diverifikasi.'
+        );
+    }
+
+    public function rejectPayment(Request $request, $id)
+    {
+        $request->validate([
+            'payment_note' => 'required'
+        ]);
+
+        $order = Order::findOrFail($id);
+
+        $order->payment_status = 'Ditolak';
+        $order->payment_note = $request->payment_note;
+
+        $order->save();
+
+        return redirect()
+            ->route('admin.show', $order->id)
+            ->with('success', 'Pembayaran berhasil ditolak.');
+    }
+
+    public function showRejectForm($id)
+    {
+        $order = Order::findOrFail($id);
+
+        return view('admin.reject-payment', compact('order'));
+    }
+
 
 }

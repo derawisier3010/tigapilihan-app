@@ -86,8 +86,23 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::delete('/admin/user-delete/{id}', [AdminController::class, 'deleteUser'])
         ->name('admin.user.delete');
+
+    Route::get('/admin/payment/verify/{id}', [AdminController::class, 'verifyPayment'])
+        ->name('admin.verify.payment');
+
+    Route::get('/admin/payment/reject/{id}', [AdminController::class, 'showRejectForm'])
+        ->name('admin.reject.payment');
+
+    Route::post('/admin/payment/reject/{id}', [AdminController::class, 'rejectPayment'])
+        ->name('admin.reject.payment.save');
+
+        
 });
 
+
+/*
+INFORMASI PEMBAYARAN
+*/
 
 Route::get('/admin/{id}', [AdminController::class, 'show'])->name('admin.show');
 Route::delete('/admin/delete/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
@@ -100,11 +115,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/pesanan/{id}', [OrderController::class, 'show'])
         ->name('orders.show');
 
+    Route::get('/orders/{id}/upload-proof', [OrderController::class, 'showUploadProof'])
+        ->name('orders.upload.proof');
+
+    Route::post('/orders/{id}/upload-proof', [OrderController::class, 'uploadProof'])
+        ->name('orders.upload.proof.save');
+
+    Route::post('/pesanan/{id}/received',
+    [OrderController::class, 'confirmReceived'])
+    ->name('orders.received');
+
 });
-
-Route::get('/admin/users', [AdminController::class, 'users'])
-    ->name('admin.users');
-
 
 require __DIR__.'/auth.php';
 

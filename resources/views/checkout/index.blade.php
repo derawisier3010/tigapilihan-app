@@ -41,8 +41,11 @@
         </div>
         @endif
         
-        <form action="{{ route('checkout.process') }}" method="POST">
-            @csrf
+        <form action="{{ route('checkout.process') }}"
+            method="POST"
+            enctype="multipart/form-data">
+
+             @csrf
 
             <!-- NAMA -->
             <div style="margin-bottom:15px;">
@@ -144,17 +147,20 @@
 
 
             <!-- METODE PEMBAYARAN -->
-           <label style="display:block; margin-bottom:5px;">
-                <input type="radio"
+          <label style="display:block; margin-bottom:10px;">
+                <input
+                    type="radio"
                     name="metode"
                     value="COD"
+                    id="cod-radio"
                     required>
 
                 COD (Bayar di Tempat)
             </label>
 
             <label style="display:block; margin-bottom:10px;">
-                <input type="radio"
+                <input
+                    type="radio"
                     name="metode"
                     value="Transfer"
                     id="transfer-radio">
@@ -163,40 +169,47 @@
             </label>
 
             <div id="transfer-info" style="
-                    display:none;
-                    background:#f8f9fa;
-                    border:1px solid #ddd;
-                    padding:15px;
-                    border-radius:10px;
-                    margin-top:10px;
-                ">
+                display:none;
+                background:#f8f9fa;
+                border:1px solid #ddd;
+                padding:15px;
+                border-radius:10px;
+                margin-top:15px;
+            ">
 
-                    <h4 style="margin-bottom:10px;">
-                        Informasi Transfer
-                    </h4>
+                <h4>Informasi Transfer</h4>
 
-                    <p>
-                        <b>MyBlu BCA</b>
-                    </p>
+                <p>
+                    <b>BCA Blu</b>
+                </p>
 
-                    <p>
-                        No Rekening:
-                        <b>005823525602 </b>
-                    </p>
+                <p>
+                    No Rekening :
+                    <b>005823525602</b>
+                </p>
 
-                    <p>
-                        Atas Nama:
-                        <b>Ratna Dwi Gita Stefani</b>
-                    </p>
+                <p>
+                    Atas Nama :
+                    <b>Ratna Dwi Gita Stefani</b>
+                </p>
 
-                    <hr>
+                <hr>
 
-                    <small style="color:gray;">
-                        Setelah melakukan transfer,
-                        admin akan memverifikasi pembayaran Anda.
-                    </small>
+                <label style="display:block;margin-top:15px;">
+                    Upload Bukti Transfer
+                </label>
 
-                </div>
+                <input
+                    type="file"
+                    name="transfer_proof"
+                    accept=".jpg,.jpeg,.png"
+                >
+
+                <small style="color:gray;">
+                    Format JPG / PNG maksimal 2 MB.
+                </small>
+
+            </div>
 
             <!-- BUTTON -->
             <div style="text-align:right;">
@@ -221,27 +234,23 @@
 
 <script>
 
-document.addEventListener('DOMContentLoaded', function () {
+const cod=document.getElementById('cod-radio');
+const transfer=document.getElementById('transfer-radio');
+const info=document.getElementById('transfer-info');
 
-    const transferRadio =
-        document.getElementById('transfer-radio');
+document.querySelectorAll('input[name="metode"]').forEach(function(item){
 
-    const transferInfo =
-        document.getElementById('transfer-info');
+    item.addEventListener('change',function(){
 
-    document.querySelectorAll(
-        'input[name="metode"]'
-    ).forEach(function(radio){
+        if(transfer.checked){
 
-        radio.addEventListener('change', function(){
+            info.style.display='block';
 
-            if(transferRadio.checked){
-                transferInfo.style.display = 'block';
-            } else {
-                transferInfo.style.display = 'none';
-            }
+        }else{
 
-        });
+            info.style.display='none';
+
+        }
 
     });
 
